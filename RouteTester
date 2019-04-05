@@ -1,0 +1,71 @@
+#include <kipr/botball.h>
+#include <fcntl.h>
+#include <pthread.h>
+#include <unistd.h>
+
+int main()
+{
+    
+    create_connect();
+    //wait_for_light(0);
+    set_create_distance(0);
+    set_create_total_angle(0);
+    
+    create_drive_direct(-100, -100);
+   	msleep(1000*215/100);
+    
+    while (get_create_total_angle() < 100) 
+    {
+       	create_drive_direct(-100, 100); 
+    }
+        
+    create_drive_direct(100, 100);
+    msleep(1000*920/100); 
+    
+    set_create_total_angle(0);
+    while (get_create_total_angle() > -100) 
+    {
+       	create_drive_direct(100, -100); 
+    }
+    
+    create_drive_direct(0, 0);
+    
+    enable_servos();
+    set_servo_position(0, 450);
+    msleep(1000);
+    
+    create_drive_direct(100, 100);
+    msleep(1000*208/100);
+    
+    create_drive_direct(0, 0);
+    
+    if(get_servo_position(0) != 2047)
+    {
+    	set_servo_position(0, 2047);
+    }
+    msleep(800);
+    
+    create_drive_direct(-100, -100);
+    msleep(1000*400/100);
+    
+    create_drive_direct(0, 0);
+    msleep(800);
+    
+    enable_servos();
+    set_servo_position(0, 450);
+    msleep(1000);
+    
+    create_drive_direct(-100, -100);
+    msleep(1000*205/100);
+    
+    if(get_servo_position(0) != 2047)
+    {
+    	set_servo_position(0, 2047);
+    }
+    msleep(800);
+    
+    create_stop();
+    create_disconnect();
+    return 0;
+    
+}
